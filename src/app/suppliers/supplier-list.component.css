@@ -1,0 +1,22 @@
+.list.box { background: var(--card); padding: 1rem; border-radius: 12px; box-shadow: var(--shadow); }
+.button { background: var(--primary); color: #fff; padding: 0.5rem 0.75rem; border-radius: 8px; text-decoration: none; font-weight:700 }
+.button.small { padding: 0.25rem 0.5rem; margin-right: 0.5rem }
+.remove { background: var(--danger); color: white; border:0; padding:0.35rem 0.5rem; border-radius:6px }
+/* Align action buttons in product list */
+.inventory-table td { vertical-align: middle; }
+.inventory-table td:last-child { display: flex; align-items: center; justify-content: flex-end; gap: 0.5rem; }
+.inventory-table td .button.small, .inventory-table td .remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem 0.5rem;
+  height: 32px;
+  border-radius: 6px;
+  border: 0;
+  cursor: pointer;
+}
+.inventory-table td .remove { background: var(--danger); color: #fff; }
+.inventory-table td .button.small { background: var(--primary); color: #fff; }
+/* View button green */
+.inventory-table td .button.small.view { background: #16a34a; color: #fff }
+.notification { background: #e6ffed; border:1px solid #b7f2c6; color:#075c2d; padding:0.6rem 0.8rem; border-radius:8px; margin-top:0.75rem }

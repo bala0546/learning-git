@@ -1,0 +1,46 @@
+<div class="app-container">
+  <header class="top">
+    <h1>Purchase Details</h1>
+    <nav>
+      <a routerLink="/purchases" class="back">Back</a>
+    </nav>
+  </header>
+
+  <div class="box" style="margin-top:1rem;">
+    <ng-container *ngIf="purchase; else notFound">
+      <div class="purchase-view">
+        <div class="header-row">
+          <div class="id">Purchase #{{ purchase.id }}</div>
+          <div class="date">{{ purchase.createdAt | date:'medium' }}</div>
+        </div>
+
+        <div class="grid">
+          <div class="card supplier-card">
+            <div><strong>Supplier:</strong> {{ purchase.supplierId }}</div>
+            <!-- supplier detail could be expanded later -->
+          </div>
+
+          <div class="card items-card">
+            <h3>Items</h3>
+            <ul class="items-list">
+              <li *ngFor="let it of purchase.items" class="item-row">
+                <div class="item-name">{{ it.name || it.productId }}</div>
+                <div class="item-qty">x {{ it.quantity }}</div>
+                <div class="item-price">{{ it.price | currency:'INR':'symbol':'1.0-0' }}</div>
+              </li>
+            </ul>
+
+            <div class="total-row">
+              <div class="label">Total</div>
+              <div class="value">{{ purchase.total | currency:'INR':'symbol':'1.0-0' }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-template #notFound>
+      <div class="muted">Purchase not found</div>
+    </ng-template>
+  </div>
+</div>

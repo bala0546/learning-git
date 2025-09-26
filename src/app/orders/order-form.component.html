@@ -1,0 +1,99 @@
+<div class="app-container">
+  <header class="top">
+    <h1>Create Order</h1>
+  </header>
+
+  <form #orderForm="ngForm" (ngSubmit)="submit(orderForm)" class="box order-grid" style="margin-top:1rem;">
+    <!-- Left column: Customer details only -->
+    <div class="left-col">
+      <section class="card">
+        <h2 class="section-title">Customer Details</h2>
+        <label>
+          <div class="field-label">Name</div>
+          <input type="text" class="large-input" name="customerName" [(ngModel)]="customerName" #nameCtrl="ngModel" required />
+          <div class="error" *ngIf="nameCtrl.invalid && (nameCtrl.dirty || nameCtrl.touched)">Customer name is required.</div>
+        </label>
+
+        <label>
+          Phone
+          <input class="large-input" type="tel" inputmode="tel" name="customerPhone" [(ngModel)]="customerPhone" #phoneCtrl="ngModel" required pattern="^(\\+91[-\\s]?)?[6-9](?:[-\\s]?[0-9]){9}$" maxlength="20" title="Indian mobile number; allows spaces or hyphens" />
+          <div class="error" *ngIf="phoneCtrl.invalid && (phoneCtrl.dirty || phoneCtrl.touched)">
+            <span *ngIf="phoneCtrl.errors?.['required']">Phone is required.</span>
+            <span *ngIf="phoneCtrl.errors?.['pattern']">Enter a valid Indian phone number.</span>
+          </div>
+        </label>
+
+        <label>
+          Address
+          <textarea class="large-input" name="customerAddress" [(ngModel)]="customerAddress" #addressCtrl="ngModel" required rows="3"></textarea>
+          <div class="error" *ngIf="addressCtrl.invalid && (addressCtrl.dirty || addressCtrl.touched)">Address is required.</div>
+        </label>
+
+        <!-- left column actions intentionally left empty -->
+        <div style="margin-top:0.75rem; display:flex; gap:0.5rem;"></div>
+      </section>
+    </div>
+
+    <!-- Right column: Products list followed by Cart -->
+    <aside class="right-col">
+      <section class="card products">
+        <h2 class="section-title">Products</h2>
+        <div style="display:flex; gap:0.5rem; align-items:center; margin-bottom:0.5rem">
+          <input name="productQuery" placeholder="Search products..." [(ngModel)]="productQuery" (ngModelChange)="onProductQueryChange($event)" style="flex:1" />
+          <select name="selectedCategory" [(ngModel)]="selectedCategory" (ngModelChange)="onCategoryChange($event)" style="min-width:160px">
+            <option *ngFor="let c of categories" [value]="c">{{c}}</option>
+          </select>
+        </div>
+        <div class="products-table-wrap">
+          <table class="inventory-table">
+            <thead>
+              <tr><th>ID</th><th>Name</th><th>Stock</th><th>Price</th><th>Qty</th><th></th></tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let p of pagedProducts">
+                <td>{{p.id}}</td>
+                <td>{{p.name}}</td>
+                <td [class.low]="p.quantity<10">{{p.quantity}}</td>
+                <td>{{p.price | currency:'INR':'symbol':'1.0-0'}}</td>
+                <td class="qty-cell"><input type="number" min="0" step="1" [(ngModel)]="qtyMap[p.id]" name="qty-{{p.id}}" /></td>
+                <td><button type="button" (click)="addToCart(p)" [disabled]="!(qtyMap[p.id] && (qtyMap[p.id] > 0))">Add</button></td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="display:flex;justify-content:center;align-items:center;gap:0.5rem;margin-top:0.75rem">
+            <button (click)="prevPage()" [disabled]="currentPage === 0">Previous</button>
+            <div class="muted small">Page {{ currentPage + 1 }} of {{ totalPages }}</div>
+            <button (click)="nextPage()" [disabled]="currentPage >= totalPages - 1">Next</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" style="margin-top:1rem;">
+        <h2 class="section-title">Cart</h2>
+        <div class="cart-list">
+          <div *ngIf="!cart.length" class="muted">No items in cart</div>
+          <div *ngFor="let c of cart" class="cart-item">
+            <div class="cart-item-main">
+              <div class="cart-item-name">{{ c.product.name }}</div>
+              <div class="cart-item-qty">x {{ c.qty }}</div>
+            </div>
+            <div class="cart-item-actions">
+              <button class="small" (click)="removeFromCart(c.product.id)">Remove</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="cart-summary">
+          <div class="summary-row"><span>Subtotal</span><span>{{ total | currency:'INR' }}</span></div>
+          <div class="summary-row total"><span>Total</span><span>{{ total | currency:'INR' }}</span></div>
+        </div>
+
+        <div style="margin-top:0.75rem; display:flex; gap:0.5rem;">
+          <!-- let submit() validate and prompt (remove disabled so alert shows) -->
+          <button type="submit">Place Order</button>
+          <button type="button" (click)="router.navigate(['/orders'])" class="cancel-btn">Cancel</button>
+        </div>
+      </section>
+    </aside>
+  </form>
+</div>

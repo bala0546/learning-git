@@ -1,0 +1,71 @@
+<div class="app-container">
+  <header class="top">
+    <h1>Stock Dashboard</h1>
+  </header>
+
+  <div class="stock-controls" style="margin-top:0.75rem; display:flex; gap:0.75rem; align-items:center">
+    <input placeholder="Search products..." [(ngModel)]="query" (ngModelChange)="applyFilter()" style="flex:1" />
+    <select [(ngModel)]="selectedCategory" (ngModelChange)="applyFilter()" style="min-width:160px">
+      <option *ngFor="let c of categories" [value]="c">{{c}}</option>
+    </select>
+    <label style="display:flex;gap:0.4rem;align-items:center;color:var(--muted);">
+      Low stock threshold
+      <input type="number" [(ngModel)]="restockThreshold" style="width:84px;padding:0.25rem;border-radius:6px;border:1px solid rgba(0,0,0,0.06)" />
+    </label>
+  </div>
+
+  <div class="stock-body">
+    <div style="flex:1">
+      <div class="list box">
+        <table class="inventory-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Category</th>
+              <th class="col-qty">Qty</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let p of pagedProducts">
+              <td>{{p.id}}</td>
+              <td>{{p.name}}</td>
+              <td>
+                {{ p.category }}
+              </td>
+              <td class="col-qty" [class.low]="p.quantity < restockThreshold" style="font-weight:700">{{ p.quantity }}</td>
+              <td>
+                <div style="display:flex;gap:0.5rem;align-items:center">
+                  <button (click)="decrement(p,1)" title="Decrease">-</button>
+                  <button (click)="increment(p,1)" title="Increase">+</button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="display:flex;justify-content:center;align-items:center;gap:0.5rem;margin-top:0.75rem">
+          <button (click)="prevPage()" [disabled]="currentPage === 0">Previous</button>
+          <div class="muted small">Page {{ currentPage + 1 }} of {{ totalPages }}</div>
+          <button (click)="nextPage()" [disabled]="currentPage >= totalPages - 1">Next</button>
+        </div>
+      </div>
+    </div>
+
+    <aside style="width:260px">
+      <div class="card">
+        <h3 style="margin:0 0 0.5rem 0">Stock Summary</h3>
+        <div style="display:flex;flex-direction:column;gap:0.4rem">
+          <div><strong>Total products:</strong> {{ totalProducts }}</div>
+          <div><strong>Total quantity:</strong> {{ totalQuantity }}</div>
+          <div><strong>Low stock items:</strong> {{ lowStockCount }}</div>
+        </div>
+        <hr style="margin:0.75rem 0" />
+        <div style="display:flex;gap:0.5rem;flex-direction:column">
+          <button class="btn-show-low" (click)="filterLowStock()">Show low stock ({{ lowStockCount }})</button>
+          <button class="btn-show-all" (click)="clearLowFilter()">Show all</button>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>

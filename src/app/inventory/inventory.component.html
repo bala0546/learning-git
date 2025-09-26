@@ -1,0 +1,40 @@
+<div class="inventory-page">
+  <div class="top">
+    <h2>Inventory</h2>
+    <div class="actions">
+      <input type="text" placeholder="Search by name or category" [(ngModel)]="query" (input)="applyFilter()" />
+      <button (click)="toggleAdd()">{{ showAdd ? 'Cancel' : 'Add Product' }}</button>
+    </div>
+  </div>
+
+  <div class="add-form" *ngIf="showAdd">
+    <input placeholder="Name" [(ngModel)]="newProduct.name" />
+    <input placeholder="Category" [(ngModel)]="newProduct.category" />
+    <input type="number" placeholder="Quantity" [(ngModel)]="newProduct.quantity" />
+    <input type="number" placeholder="Price" [(ngModel)]="newProduct.price" step="1" />
+    <button (click)="add()">Save</button>
+  </div>
+
+  <table class="inventory-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Qty</th>
+        <th>Price</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of filtered">
+        <td>{{ p.id }}</td>
+        <td>{{ p.name }}</td>
+        <td>{{ p.category }}</td>
+        <td [class.low]="p.quantity < 10">{{ p.quantity }}</td>
+        <td>{{ p.price | currency }}</td>
+        <td><button class="remove" (click)="remove(p.id)">Remove</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,22 @@
+.list.box { background: var(--card); padding: 1rem; border-radius: 12px; box-shadow: var(--shadow); }
+.button { background: var(--primary); color: #fff; padding: 0.5rem 0.75rem; border-radius: 8px; text-decoration: none; font-weight:700 }
+.button.small { padding: 0.25rem 0.5rem; margin-right: 0.5rem }
+.remove { background: var(--danger); color: white; border:0; padding:0.35rem 0.5rem; border-radius:6px }
+/* Align action buttons in purchases list (match orders list) */
+.inventory-table th, .inventory-table td { vertical-align: middle; padding: 0.5rem 0.75rem; }
+.inventory-table td:last-child { display: flex; align-items: center; justify-content: flex-end; gap: 0.5rem; height: 100%; }
+.inventory-table td > a.button, .inventory-table td > button, .inventory-table td > .remove {
+  margin: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0.25rem 0.5rem !important;
+  height: 32px !important;
+  line-height: 1 !important;
+  box-sizing: border-box !important;
+  align-self: center !important;
+}
+.inventory-table td > a.button { text-decoration: none; }
+/* Remove top margins in item lists so rows height is predictable */
+.inventory-table td ul { margin: 0; padding-left: 1rem; }
+.inventory-table td ul li { margin: 0; padding: 0; }

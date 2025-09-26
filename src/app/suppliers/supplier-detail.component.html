@@ -1,0 +1,41 @@
+<div class="app-container">
+  <header class="top">
+    <h1>Supplier Details</h1>
+    
+  </header>
+
+  <div class="box" style="margin-top:1rem;">
+    <ng-container *ngIf="supplier; else notFound">
+      <div class="supplier-card">
+        <div class="supplier-top">
+          <div class="avatar">{{ supplier.name ? (supplier.name.charAt(0) | uppercase) : 'S' }}</div>
+          <div class="title">
+            <h2>{{ supplier.name }}</h2>
+            <div class="muted small">ID: {{ supplier.id }} &nbsp;•&nbsp; {{ supplier.contact }}</div>
+          </div>
+        </div>
+
+        <div class="supplier-grid">
+          <div>
+            <div class="label">Email</div>
+            <div class="value">{{ supplier.email || '-' }}</div>
+          </div>
+          <div>
+            <div class="label">Phone</div>
+            <div class="value">{{ supplier.phone || '-' }}</div>
+          </div>
+          <div class="full">
+            <div class="label">Address</div>
+            <div class="value">{{ supplier.address || '—' }}</div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <a routerLink="/suppliers" class="button">← Back</a>
+          <a [routerLink]="['/suppliers', supplier.id, 'edit']" class="button outline">Edit</a>
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #notFound><div class="muted">Supplier not found</div></ng-template>
+  </div>
+</div>

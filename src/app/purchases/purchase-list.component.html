@@ -1,0 +1,46 @@
+<div class="app-container">
+  <header class="top">
+    <h1>Purchases</h1>
+  </header>
+
+  <div class="top" style="margin-top:0.75rem; display:flex; gap:0.5rem; align-items:center;">
+    <a class="button" routerLink="/purchases/new">Create Purchase</a>
+    <div style="margin-left:auto;display:flex;gap:0.5rem;align-items:center">
+      <label style="font-size:0.9rem;color:var(--muted)">From <input type="date" [(ngModel)]="fromDate" (ngModelChange)="applyFilterAndSort()" /></label>
+      <label style="font-size:0.9rem;color:var(--muted)">To <input type="date" [(ngModel)]="toDate" (ngModelChange)="applyFilterAndSort()" /></label>
+      <button class="small" (click)="clearDateFilter()">Clear</button>
+    </div>
+  </div>
+
+  <div class="list box" style="margin-top:1rem;">
+    <table class="inventory-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Created</th>
+          <th>Supplier</th>
+          <th>Items</th>
+          <th>Total</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of displayedPurchases">
+          <td>{{ p.id }}</td>
+          <td>{{ p.createdAt | date:'short' }}</td>
+          <td>{{ p.supplierId }}</td>
+          <td>
+            <ul>
+              <li *ngFor="let it of p.items">{{ it.name || it.productId }} x {{ it.quantity }}</li>
+            </ul>
+          </td>
+          <td>{{ p.total | currency:'INR':'symbol':'1.0-0' }}</td>
+          <td>
+            <a [routerLink]="['/purchases', p.id]" class="button small">View</a>
+            <button (click)="remove(p.id)" class="remove">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

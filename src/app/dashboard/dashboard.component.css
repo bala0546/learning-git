@@ -1,0 +1,176 @@
+.dashboard {
+  padding: 1.25rem;
+  font-family: Inter, system-ui, Arial;
+  min-height: calc(100vh - 2rem);
+  /* layered subtle backgrounds for a modern dashboard look */
+  background: radial-gradient(800px 300px at 10% 10%, rgba(124, 58, 237, 0.06), transparent 12%),
+              linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Header / navigation */
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+.main-nav {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-left: 1rem;
+}
+.main-nav a {
+  color: var(--muted);
+  text-decoration: none;
+  padding: 0.45rem 0.7rem;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: all 0.16s ease;
+  display:inline-flex;
+  align-items:center;
+  gap:0.5rem;
+}
+.nav-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+.main-nav a:hover {
+  background: rgba(37, 99, 235, 0.12);
+  color: var(--primary);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
+}
+.main-nav a:hover .nav-icon {
+  color: var(--primary);
+}
+.main-nav a.active {
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  color: white;
+  box-shadow: 0 6px 18px rgba(2, 6, 23, 0.08);
+}
+.main-nav a.active .nav-icon {
+  color: white;
+}
+
+/* Cards */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.card {
+  /* center content vertically and horizontally */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1.25rem;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 255, 0.9));
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(2, 6, 23, 0.06);
+  border: 1px solid rgba(15, 23, 42, 0.04);
+}
+.card:nth-child(1) {
+  background: linear-gradient(135deg, #fef3c7, #fde68a);
+  color: #92400e;
+}
+.card:nth-child(2) {
+  background: linear-gradient(135deg, #fee2e2, #fecaca);
+  color: #9b1c1c;
+}
+.card:nth-child(3) {
+  background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+  color: #1e3a8a;
+}
+.card:nth-child(4) {
+  background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+  color: #065f46;
+}
+.card:nth-child(5) {
+  background: linear-gradient(135deg, #ede9fe, #e9d5ff);
+  color: #5b21b6;
+}
+.card:nth-child(6) {
+  background: linear-gradient(135deg, #e0f2fe, #bae6fd);
+  color: #075985;
+}
+.card h3 {
+  margin: 0;
+  color: inherit; /* allow per-card color to style the heading */
+  font-size: 0.95rem;
+}
+.card .big {
+  font-size: 2rem;
+  margin-top: 0.5rem;
+  color: inherit;
+  font-weight: 800;
+}
+.card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:0.5rem;
+  background: rgba(255,255,255,0.25);
+  box-shadow: 0 6px 16px rgba(2,6,23,0.06);
+}
+.card-icon svg { width:22px;height:22px; color: currentColor }
+.card-icon.pulse { box-shadow: 0 8px 22px rgba(239,68,68,0.12); }
+
+@keyframes pulseGlow {
+  0% { transform: scale(1); opacity: 1 }
+  50% { transform: scale(1.06); opacity: 0.92 }
+  100% { transform: scale(1); opacity: 1 }
+}
+.card-icon.pulse { animation: pulseGlow 2.8s infinite ease-in-out; }
+
+/* Recent list */
+.recent {
+  margin-top: 1rem;
+}
+.recent > .box {
+  background: linear-gradient(180deg, #ffffff, #fbfdff);
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(2, 6, 23, 0.04);
+}
+.recent ul {
+  margin: 0;
+  padding-left: 1rem;
+  color: var(--muted);
+}
+.recent a {
+  color: inherit;
+  text-decoration: none;
+  display: block;
+  padding: 0.35rem 0.25rem;
+  border-radius: 8px;
+}
+.recent a:hover {
+  background: rgba(124, 58, 237, 0.04);
+  color: var(--accent);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  .cards {
+    grid-template-columns: 1fr;
+  }
+  .main-nav {
+    display: none;
+  }
+}

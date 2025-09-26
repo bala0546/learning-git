@@ -1,0 +1,40 @@
+<div class="register-page">
+  <div class="auth-card">
+    <div class="auth-side">
+      <img src="https://img.freepik.com/premium-photo/warehouse-automation-robotic-arms-sorting-machines-flat-design-illustration_1298745-11276.jpg" alt="Illustration" />
+    </div>
+
+    <div class="auth-body">
+      <form [formGroup]="form" (ngSubmit)="submit()" class="form">
+        <h2>Create account</h2>
+
+        <div class="field">
+          <label>Full name</label>
+          <input formControlName="username" />
+          <div class="field-error" *ngIf="form.get('username')?.touched && form.get('username')?.hasError('required')">Name is required</div>
+        </div>
+
+        <div class="field">
+          <label>Password</label>
+          <input type="password" formControlName="password" />
+          <div class="field-error" *ngIf="form.get('password')?.touched && form.get('password')?.hasError('required')">Password is required</div>
+          <div class="field-error" *ngIf="form.get('password')?.touched && form.get('password')?.hasError('minlength')">Password must be at least 6 characters</div>
+          <div class="field-error" *ngIf="form.get('password')?.touched && form.get('password')?.hasError('pattern')">Password must include uppercase, lowercase, a number and a special character</div>
+        </div>
+
+        <div class="field">
+          <label>Confirm password</label>
+          <input type="password" formControlName="confirm" />
+          <div class="field-error" *ngIf="form.get('confirm')?.touched && form.get('confirm')?.hasError('required')">Please confirm your password</div>
+          <div class="field-error" *ngIf="form.get('confirm')?.touched && !passwordsMatch">Passwords do not match</div>
+        </div>
+
+        <div class="actions">
+          <button type="submit" [disabled]="form.invalid || !passwordsMatch" class="btn-register">Register</button>
+        </div>
+        <p class="demo-credentials">Already have an account? <a routerLink="/login">Sign in</a></p>
+        <div *ngIf="error" class="error-text">{{ error }}</div>
+      </form>
+    </div>
+  </div>
+</div>

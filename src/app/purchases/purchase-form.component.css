@@ -1,0 +1,4 @@
+.box { background: var(--card); padding: 1rem; border-radius: 12px; box-shadow: var(--shadow) }
+.inventory-table th, .inventory-table td { padding: 0.5rem 0.75rem }
+button { background: var(--primary); color: white; border:0; padding:0.4rem 0.6rem; border-radius:8px }
+.remove { background: var(--danger); color:white; border:0; padding:0.25rem 0.4rem; border-radius:6px }

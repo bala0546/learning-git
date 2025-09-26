@@ -1,0 +1,58 @@
+<div class="app-container">
+  <header class="top">
+    <h1>Orders</h1>
+    
+  </header>
+
+  <div class="top" style="margin-top:0.75rem; display:flex; gap:0.5rem; align-items:center;">
+    <a class="button" routerLink="/orders/new">Create Order</a>
+    <div style="margin-left:auto; display:flex; gap:0.5rem; align-items:center">
+      <label class="muted">From</label>
+      <input type="date" [(ngModel)]="fromDate" />
+      <label class="muted">To</label>
+      <input type="date" [(ngModel)]="toDate" />
+      <label class="muted">Status</label>
+      <select [(ngModel)]="selectedStatus">
+        <option value="">All</option>
+        <option *ngFor="let s of statusOptions" [value]="s.value">{{ s.label }}</option>
+      </select>
+      <button class="small" (click)="clearDateFilter()">Clear</button>
+    </div>
+  </div>
+
+  <div class="list box" style="margin-top:1rem;">
+    <table class="inventory-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Created</th>
+          <th>Items</th>
+          <th>Total</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let o of displayedOrders">
+          <td>{{ o.id }}</td>
+          <td>{{ o.createdAt | date:'short' }}</td>
+          <td>
+            <ul>
+              <li *ngFor="let it of o.items">{{ it.name || it.productId }} x {{ it.quantity }}</li>
+            </ul>
+          </td>
+          <td>{{ o.total | currency:'INR':'symbol':'1.0-0' }}</td>
+          <td>
+            <select [ngModel]="o.status" (ngModelChange)="changeStatus(o, $event)" [disabled]="!isAdmin">
+              <option *ngFor="let s of statusOptions" [value]="s.value">{{ s.label }}</option>
+            </select>
+          </td>
+          <td>
+            <a [routerLink]="['/orders', o.id]" class="button small">View</a>
+            <button (click)="remove(o.id)" class="remove">Delete</button>
+           </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

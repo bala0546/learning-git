@@ -1,0 +1,49 @@
+<div class="app-container">
+  <header class="top">
+    <h1>Order Details</h1>
+  
+  </header>
+
+  <div class="box" style="margin-top:1rem;">
+    <ng-container *ngIf="order; else notFound">
+      <div class="order-view">
+        <div class="order-header">
+          <div>
+            <div class="order-id">Order #{{ order.id }}</div>
+            <div class="order-date">{{ order.createdAt | date:'medium' }}</div>
+          </div>
+          <div class="order-actions">
+            <a routerLink="/orders" class="button">Back</a>
+          </div>
+        </div>
+
+        <div class="order-grid">
+          <div class="customer-card card">
+            <div class="customer-name">{{ order.customer?.name || '—' }}</div>
+            <div class="customer-phone">{{ order.customer?.phone || '—' }}</div>
+            <div class="customer-address">{{ order.customer?.address || '—' }}</div>
+          </div>
+
+          <div class="items-card card">
+            <h3>Items</h3>
+            <ul class="items-list">
+              <li *ngFor="let it of order.items" class="item-row">
+                <div class="item-name">{{ it.name || it.productId }}</div>
+                <div class="item-meta">x {{ it.quantity }}</div>
+                <div class="item-price">{{ it.price | currency:'INR':'symbol':'1.0-0' }}</div>
+              </li>
+            </ul>
+            <div class="total-row">
+              <div class="label">Total</div>
+              <div class="value">{{ order.total | currency:'INR':'symbol':'1.0-0' }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-template #notFound>
+      <div class="muted">Order not found</div>
+    </ng-template>
+  </div>
+</div>

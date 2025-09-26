@@ -1,0 +1,162 @@
+<div class="app-container">
+  <header class="top">
+    <h1>Reports & Analytics</h1>
+  </header>
+
+  <div class="summary-grid" style="margin-top:1rem; display:grid; grid-template-columns: repeat(auto-fit,minmax(160px,1fr)); gap:1rem;">
+    <div class="card" [class.before]="!animate" [class.entrance]="animate" [style.transitionDelay]="'0ms'">
+      <div class="card-head">
+        <div class="icon icon-sales" aria-hidden="true">
+          <!-- simple sales SVG -->
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 13h4v8H3zM10 7h4v14h-4zM17 3h4v18h-4z" fill="white"/></svg>
+        </div>
+        <div>
+          <h3>Total Sales</h3>
+          <div class="metric"><span class="animated-number">{{ animatedTotals['totalSales'] | currency:'INR' }}</span></div>
+        </div>
+      </div>
+      <div class="muted">Growth (30d): <strong [style.color]="(salesGrowth || 0) >= 0 ? 'var(--success)' : 'var(--danger)'">{{ salesGrowth }}%</strong></div>
+    </div>
+    <div class="card" [class.before]="!animate" [class.entrance]="animate" [style.transitionDelay]="'80ms'">
+      <div class="card-head">
+        <div class="icon icon-orders" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zM3 11h18v2H3zM3 16h18v2H3z" fill="white"/></svg>
+        </div>
+        <div>
+          <h3>Orders</h3>
+          <div class="metric"><span class="animated-number">{{ animatedTotals['ordersCount'] }}</span></div>
+        </div>
+      </div>
+      <div class="muted">Recent: {{ recentOrders.length }} orders</div>
+    </div>
+    <div class="card" [class.before]="!animate" [class.entrance]="animate" [style.transitionDelay]="'160ms'">
+      <div class="card-head">
+        <div class="icon icon-avg" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2l3 6 6 .5-4.5 3.5L18 18l-6-3-6 3 .5-6L2 8.5 8 8 12 2z" fill="white"/></svg>
+        </div>
+        <div>
+          <h3>Avg. Order</h3>
+          <div class="metric"><span class="animated-number">{{ animatedTotals['avgOrderValue'] | currency:'INR' }}</span></div>
+        </div>
+      </div>
+      <div class="muted">Top category: <strong>{{ snapshot?.salesByCategory?.[0]?.category || '—' }}</strong></div>
+    </div>
+    <div class="card" [class.before]="!animate" [class.entrance]="animate" [style.transitionDelay]="'240ms'">
+      <div class="card-head">
+        <div class="icon icon-purchases" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 7h16v2H4zM6 11h12v6H6z" fill="white"/></svg>
+        </div>
+        <div>
+          <h3>Purchases Total</h3>
+          <div class="metric"><span class="animated-number">{{ animatedTotals['purchasesTotal'] | currency:'INR' }}</span></div>
+        </div>
+      </div>
+      <div class="muted">Last 30d</div>
+    </div>
+    <div class="card" [class.before]="!animate" [class.entrance]="animate" [style.transitionDelay]="'320ms'">
+      <div class="card-head">
+        <div class="icon icon-count" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 3h18v4H3zM3 11h18v10H3z" fill="white"/></svg>
+        </div>
+        <div>
+          <h3>Purchases Count</h3>
+          <div class="metric"><span class="animated-number">{{ animatedTotals['purchasesCount'] }}</span></div>
+        </div>
+      </div>
+      <div class="muted">All time</div>
+    </div>
+  </div>
+
+  <!-- left: compact top-products, right: larger charts -->
+  <div style="margin-top:1rem; display:grid; grid-template-columns: 1fr 1.6fr; gap:1rem;">
+    <div class="card" [class.before]="!animate" [class.entrance]="animate" [style.transitionDelay]="'420ms'">
+      <h3>Top products by quantity sold</h3>
+
+      <div *ngIf="(snapshot?.topProducts?.length ?? 0) > 0; else noTop">
+        <!-- Highlight best seller -->
+        <div class="best-area">
+          <div class="best-card" *ngIf="snapshot?.topProducts?.[0] as best">
+            <div class="avatar">{{ getInitials(best?.name) }}</div>
+            <div class="best-info">
+              <div class="best-title">Best Seller</div>
+              <div class="best-name">{{ best?.name }}</div>
+              <div class="best-meta">Sold: <strong>{{ best?.sold }}</strong></div>
+            </div>
+            <div class="best-highlight">{{ best?.sold }}</div>
+          </div>
+
+          <div class="top-categories" *ngIf="snapshot?.salesByCategory?.length">
+            <div class="cat-card">
+              <div class="cat-title">Top Category</div>
+              <div class="cat-name">{{ snapshot?.salesByCategory?.[0]?.category }}</div>
+              <div class="cat-value">{{ snapshot?.salesByCategory?.[0]?.value | currency:'INR':'symbol':'1.0-0' }}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- compact product grid (smaller, show top 4) -->
+        <div class="product-grid small">
+          <div class="product-card" *ngFor="let p of (snapshot?.topProducts ?? []) | slice:0:4; let i = index">
+            <div class="prod-avatar">{{ getInitials(p.name) }}</div>
+            <div class="prod-body">
+              <div class="prod-name">{{ p.name }}</div>
+              <div class="prod-meta">Sold: <strong>{{ p.sold }}</strong></div>
+              <div class="mini-bar"><div class="mini-fill" [style.width.%]="getSoldPercent(p.sold)"></div></div>
+            </div>
+            <div class="prod-badge" *ngIf="i === 0">Top</div>
+          </div>
+        </div>
+
+      </div>
+      <ng-template #noTop><div class="muted">No sales yet</div></ng-template>
+    </div>
+
+    <div class="card" [class.before]="!animate" [class.entrance]="animate" [style.transitionDelay]="'520ms'">
+      <h3>Inventory</h3>
+      <div class="muted">Stock value: {{ snapshot?.stockValue | currency:'INR':'symbol':'1.0-0' }}</div>
+      <div class="muted">Low stock items: {{ snapshot?.lowStockCount }}</div>
+
+      <div style="margin-top:1rem; display:flex; gap:0.75rem; align-items:flex-start">
+        <div style="display:flex; flex-direction:column; gap:0.5rem; align-items:center; min-width:280px">
+          <svg viewBox="0 0 200 200" width="220" height="220" class="pie">
+            <g *ngFor="let s of inventorySlices; let i = index">
+              <path [attr.d]="$any(s).d" [attr.fill]="$any(s).color"></path>
+            </g>
+          </svg>
+          <div class="legend">
+            <div *ngFor="let it of displayInventoryByCategory; let idx = index" class="legend-item">
+              <span class="swatch" [style.background]="getColor(idx)"></span>
+              <span class="legend-label">{{ it.category }} ({{ it.qty }})</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="flex:1; display:flex; flex-direction:column; gap:0.5rem;">
+          <!-- Show Recent Orders first -->
+          <div>
+            <h4 style="margin:0">Recent Orders</h4>
+            <div *ngIf="recentOrders.length; else noRecent">
+              <div class="recent-item" *ngFor="let o of recentOrders; let idx = index" [class.before]="!animate" [class.entrance]="animate" [style.transitionDelay]="(idx * 60) + 'ms'">
+                <div class="ro-left">#{{ o.id }} <div class="small muted">{{ o.count }} items</div></div>
+                <div class="ro-right">{{ o.total | currency:'INR' }} <div class="small muted">{{ o.date | date:'short' }}</div></div>
+              </div>
+            </div>
+            <ng-template #noRecent><div class="muted">No recent orders</div></ng-template>
+          </div>
+
+          <!-- Then Recent Purchases -->
+          <div style="margin-top:0.5rem">
+            <h4 style="margin:0">Recent Purchases</h4>
+            <div *ngIf="recentPurchases.length; else noPurchases">
+              <div class="recent-item" *ngFor="let p of recentPurchases; let idx = index" [class.before]="!animate" [class.entrance]="animate" [style.transitionDelay]="(idx * 60) + 'ms'">
+                <div class="ro-left">#{{ p.id }} <div class="small muted">{{ p.count }} items</div></div>
+                <div class="ro-right">{{ p.total | currency:'INR' }} <div class="small muted">{{ p.date | date:'short' }}</div></div>
+              </div>
+            </div>
+            <ng-template #noPurchases><div class="muted">No recent purchases</div></ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

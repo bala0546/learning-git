@@ -1,0 +1,51 @@
+.form.box { background: var(--card); padding: 0.9rem; border-radius: 12px; box-shadow: var(--shadow); display:flex; flex-direction:column; gap:0.75rem; width:100%; box-sizing:border-box }
+.form.box > div { display:flex; flex-direction:column; gap:0.6rem; align-items:flex-start }
+label { display:flex; flex-direction:column; font-weight:600; color:var(--muted); width:100% }
+input, select {
+  padding:0.45rem;
+  border-radius:6px;
+  border:1px solid #e6edf6;
+  font-size:0.95rem;
+  width:100%;
+  max-width:100%;
+  box-sizing:border-box;
+}
+button { background:var(--primary); color:white; padding:0.5rem 0.75rem; border-radius:8px; font-weight:600 }
+button[type="button"] { background:#94a3b8 }
+
+/* Product form specific: Save = green, Cancel = red */
+.form.box button[type="submit"] {
+  background: #16a34a; /* green */
+  color: #fff;
+  border: 0;
+}
+.form.box button[type="button"] {
+  background: #ef4444; /* red */
+  color: #fff;
+  border: 0;
+}
+
+.image-gallery { display:grid; grid-template-columns:1fr 1fr; gap:0.5rem }
+.image-card { display:block; border-radius:8px; overflow:hidden; box-shadow:0 6px 18px rgba(2,6,23,0.06); text-decoration:none; color:inherit }
+.image-card img { width:100%; height:120px; object-fit:cover; display:block }
+.image-card .caption { padding:0.45rem; background:linear-gradient(180deg, rgba(255,255,255,0.95), rgba(240,240,255,0.95)); font-weight:600; font-size:0.85rem }
+.static-image.box { padding:0; overflow:hidden }
+.static-image img { width:100%; height:300px; object-fit:cover; border-radius:12px }
+
+.form-left { padding-right:0 }
+.form-right { display:flex; flex-direction:column; gap:0.75rem; align-items:stretch }
+
+/* make action buttons slightly smaller and aligned */
+.form.box > div > div { display:flex; gap:0.5rem; }
+
+/* responsive: on small screens make inputs full width */
+@media (max-width:700px) {
+  .form.box { grid-template-columns: 1fr; }
+  input, select { width:100% }
+}
+
+@media (max-width:900px) {
+  .static-image img { height:220px }
+}
+
+.error { color:#b91c1c; font-size:0.85rem; margin-top:0.25rem }

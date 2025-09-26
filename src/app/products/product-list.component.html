@@ -1,0 +1,45 @@
+<div class="app-container">
+  <header class="top">
+    <h1 >Products List</h1>
+  </header>
+
+  <div *ngIf="notification" class="notification">{{ notification }}</div>
+
+  <div class="top" style="margin-top:0.75rem; display:flex; gap:0.5rem; align-items:center;">
+    <input class="small-search" placeholder="Search products..." name="query" [(ngModel)]="query" (ngModelChange)="applyFilter()" />
+    <select [(ngModel)]="selectedCategory" (ngModelChange)="applyFilter()" style="min-width:160px">
+      <option *ngFor="let c of categories" [value]="c">{{c}}</option>
+    </select>
+    <a *ngIf="isAdmin" class="button" routerLink="/products/new">Add Product</a>
+  </div>
+
+  <div class="list box" style="margin-top:1rem;">
+    <table class="inventory-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Qty</th>
+          <th>Price</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of filtered">
+          <td>{{ p.id }}</td>
+          <td>{{ p.name }}</td>
+          <td>{{ p.category }}</td>
+          <td [class.low]="p.quantity < 10">{{ p.quantity }}</td>
+          <td>{{ p.price | currency:'INR':'symbol':'1.0-0' }}</td>
+          <td style="text-align:right">
+            <ng-container *ngIf="isAdmin">
+              <a [routerLink]="['/products', p.id, 'edit']" class="button small">Edit</a>
+              <button class="remove" (click)="remove(p.id)">Delete</button>
+            </ng-container>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

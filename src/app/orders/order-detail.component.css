@@ -1,0 +1,20 @@
+.muted { color: var(--muted) } .box { background: var(--card); padding: 1rem; border-radius: 12px } .button { background: var(--primary); color: #fff; padding: 0.5rem 0.75rem; border-radius: 8px; text-decoration: none }
+
+/* Attractive order view styles */
+.order-view { display:flex; flex-direction:column; gap:1rem }
+.order-header { display:flex; justify-content:space-between; align-items:center }
+.order-id { font-weight:800; font-size:1.25rem }
+.order-date { color:var(--muted); font-size:0.9rem }
+.order-grid { display:grid; grid-template-columns: 320px 1fr; gap:1rem }
+.customer-card { padding:0.9rem; border-radius:10px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.01)); box-shadow: var(--shadow) }
+.customer-name { font-weight:800; font-size:1.05rem }
+.customer-phone, .customer-address { color:var(--muted); margin-top:0.35rem }
+.items-card { padding:0.9rem; border-radius:10px; background:var(--card); box-shadow:var(--shadow) }
+.items-list { list-style:none; margin:0; padding:0 }
+.item-row { display:flex; justify-content:space-between; align-items:center; padding:0.55rem 0; border-bottom:1px dashed rgba(0,0,0,0.04) }
+.item-name { font-weight:700 }
+.item-meta { color:var(--muted) }
+.item-price { font-weight:700 }
+.total-row { display:flex; justify-content:space-between; margin-top:0.8rem; font-weight:800; font-size:1.05rem }
+
+@media (max-width:920px) { .order-grid { grid-template-columns: 1fr } }

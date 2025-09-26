@@ -1,0 +1,35 @@
+.list.box { background: var(--card); padding: 1rem; border-radius: 12px; box-shadow: var(--shadow); }
+.inventory-table th, .inventory-table td { padding: 0.6rem 0.9rem }
+button { background: var(--primary); color: white; border: 0; padding: 0.45rem 0.75rem; border-radius: 8px }
+.stock-controls input, .stock-controls select { padding:0.45rem 0.6rem; border-radius:8px; border:1px solid rgba(0,0,0,0.06) }
+.inventory-table td { vertical-align:middle }
+.inventory-table td .small{ padding:0.25rem 0.45rem }
+.card { background:var(--card); padding:0.85rem; border-radius:10px; box-shadow:var(--shadow) }
+.summary-card { display:flex; flex-direction:column; gap:0.6rem }
+.summary-row { display:flex; gap:0.5rem }
+.tile { background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(250,250,255,0.9)); padding:0.6rem; border-radius:8px; flex:1; text-align:center }
+.tile-title { font-size:0.8rem; color:var(--muted); font-weight:700 }
+.tile-value { font-size:1.2rem; font-weight:800; margin-top:0.25rem }
+.progress-wrap { position:relative; background:rgba(0,0,0,0.04); height:14px; border-radius:12px; overflow:hidden }
+.progress-bar { height:100%; background:linear-gradient(90deg,#10b981,#3b82f6) }
+.progress-label { position:absolute; left:8px; top:50%; transform:translateY(-50%); font-size:0.85rem; color:var(--muted) }
+.tile { cursor:pointer; transition:transform .12s ease, box-shadow .12s ease }
+.tile:hover { transform:translateY(-4px); box-shadow:0 8px 22px rgba(2,6,23,0.08) }
+.tile-sub { font-size:0.8rem; margin-top:0.35rem }
+.inventory-table td button { padding:0.35rem 0.5rem; border-radius:8px }
+.inventory-table td button:hover { transform:translateY(-1px) }
+.inventory-table td .small { background: rgba(37,99,235,0.08); }
+.inventory-table td button { background:var(--primary); color:white; border:0 }
+.muted-btn { background:transparent; color:var(--muted); border:1px solid rgba(0,0,0,0.06); padding:0.35rem 0.6rem; border-radius:8px }
+/* category pills removed — styling moved to dashboard cards */
+/* responsive */
+@media (max-width:980px) { .stock-controls { flex-direction:column; gap:0.5rem } aside { display:none } }
+.stock-body { display:flex; gap:1rem; margin-top:1rem; align-items:center }
+.stock-body > div { flex:1 }
+.stock-body aside { width:260px }
+/* Align quantity column (4th) to the right for numeric alignment */
+.inventory-table th.col-qty, .inventory-table td.col-qty { text-align: right; padding-right:1rem }
+.btn-show-all { background:#4b65d7; color:#fff; border:0; padding:0.5rem; border-radius:8px }
+.btn-show-all:hover { background:#1e40af }
+.btn-show-low { background:#ef4444; color:#fff; border:0; padding:0.5rem; border-radius:8px }
+.btn-show-low:hover { background:#dc2626 }

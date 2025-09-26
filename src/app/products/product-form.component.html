@@ -1,0 +1,54 @@
+<div class="app-container">
+  <header class="top">
+    <!-- title removed as requested -->
+    <nav>
+      <a class="back" routerLink="/products">← Back to products</a>
+    </nav>
+  </header>
+
+  <form #productForm="ngForm" (ngSubmit)="save(productForm)">
+  <div class="form box" style="margin-top:1rem; display:block; max-width:720px; margin-left:auto; margin-right:auto;">
+    <div class="form-left">
+      <label>
+        Name
+        <input name="name" [(ngModel)]="model.name" #nameCtrl="ngModel" required />
+        <div class="error" *ngIf="nameCtrl.invalid && nameCtrl.touched">Name is required.</div>
+      </label>
+
+      <label>
+        Category
+        <select name="category" [(ngModel)]="model.category" #categoryCtrl="ngModel" required>
+          <option value="">Select category</option>
+          <option *ngFor="let c of categories" [value]="c">{{ c }}</option>
+          <option value="__other">Other (type below)</option>
+        </select>
+        <div class="error" *ngIf="categoryCtrl.invalid && categoryCtrl.touched">Category is required.</div>
+      </label>
+
+      <label *ngIf="model.category === '__other'">
+        Other Category
+        <input name="otherCategory" [(ngModel)]="otherCategory" (input)="model.category = '__other'" placeholder="Enter category" required #otherCatCtrl="ngModel" />
+        <div class="error" *ngIf="otherCatCtrl.invalid && otherCatCtrl.touched">Please enter a category.</div>
+      </label>
+
+      <label>
+        Quantity
+        <input name="quantity" type="number" [(ngModel)]="model.quantity" #qtyCtrl="ngModel" required min="0" />
+        <div class="error" *ngIf="qtyCtrl.invalid && qtyCtrl.touched">Quantity is required and must be 0 or more.</div>
+      </label>
+
+      <label>
+        Price
+        <input name="price" type="number" step="1" inputmode="numeric" [(ngModel)]="model.price" #priceCtrl="ngModel" required min="0" />
+        <div class="error" *ngIf="priceCtrl.invalid && priceCtrl.touched">Price is required and must be a whole number (no decimals).</div>
+        <div class="error" *ngIf="priceCtrl.valid && (priceCtrl.value == null || priceCtrl.value <= 0) && priceCtrl.touched">Price must be greater than 0.</div>
+      </label>
+
+      <div style="margin-top:1rem; display:flex; gap:0.5rem;">
+        <button type="submit" [disabled]="productForm.invalid || !(priceCtrl.value > 0)">Save</button>
+        <button (click)="cancel()" type="button">Cancel</button>
+      </div>
+    </div>
+  </div>
+  </form>
+</div>

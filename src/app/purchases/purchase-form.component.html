@@ -1,0 +1,67 @@
+<div class="app-container">
+  <header class="top">
+    <h1>Create Purchase</h1>
+  </header>
+
+  <div class="box" style="margin-top:1rem; display:flex; gap:1rem; flex-direction:column;">
+    <div>
+      <label>
+        Supplier
+        <select [(ngModel)]="supplierId">
+          <option [ngValue]="null">Select supplier</option>
+          <option *ngFor="let s of suppliers" [ngValue]="s.id">{{ s.name }}</option>
+        </select>
+      </label>
+    </div>
+
+    <div>
+      <h3>Products</h3>
+      <div style="display:flex;gap:0.5rem;align-items:center;margin-bottom:0.5rem">
+        <input placeholder="Search products..." [(ngModel)]="productQuery" (ngModelChange)="onProductQueryChange($event)" style="flex:1;padding:0.45rem;border-radius:8px;border:1px solid rgba(0,0,0,0.06)" />
+        <select [(ngModel)]="selectedCategory" (ngModelChange)="onCategoryChange($event)" style="min-width:160px">
+          <option *ngFor="let c of categories" [value]="c">{{c}}</option>
+        </select>
+      </div>
+       <div class="list box">
+         <table class="inventory-table">
+          <thead>
+            <tr><th>ID</th><th>Name</th><th>Stock</th><th>Qty</th><th>Price</th><th></th></tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let p of pagedProducts">
+              <td>{{p.id}}</td>
+              <td>{{p.name}}</td>
+              <td [class.low]="p.quantity<10">{{p.quantity}}</td>
+              <td>
+                <input type="number" min="0" value="0" #qty />
+              </td>
+              <td>
+                <input type="number" min="0" value="0" placeholder="Price" #price />
+              </td>
+              <td><button (click)="addToCart(p, qty, price)">Add</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="display:flex;justify-content:center;align-items:center;gap:0.5rem;margin-top:0.75rem">
+          <button (click)="prevPage()" [disabled]="currentPage === 0">Previous</button>
+          <div class="muted small">Page {{ currentPage + 1 }} of {{ totalPages }}</div>
+          <button (click)="nextPage()" [disabled]="currentPage >= totalPages - 1">Next</button>
+        </div>
+       </div>
+     </div>
+
+    <div>
+      <h3>Cart</h3>
+      <div class="list box">
+        <ul>
+          <li *ngFor="let c of cart">{{c.product.name}} x {{c.qty}} — {{ (c.price * c.qty) | currency:'INR':'symbol':'1.0-0' }} <button (click)="removeFromCart(c.product.id)" class="remove">Remove</button></li>
+        </ul>
+        <div style="margin-top:0.5rem; font-weight:800">Cart Total: {{ total | currency:'INR':'symbol':'1.0-0' }}</div>
+         <div style="margin-top:0.5rem; display:flex; gap:0.5rem;">
+           <button (click)="submit()">Place Purchase</button>
+           <button (click)="cancel()">Cancel</button>
+         </div>
+       </div>
+     </div>
+  </div>
+</div>

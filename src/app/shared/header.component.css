@@ -1,0 +1,23 @@
+:root { --header-height: 120px; --header-top-offset: 0px; }
+.header-bar { position: fixed; top: 0 !important; left: 0; right: 0; height: var(--header-height); display: flex; align-items: center; background: linear-gradient(90deg, rgba(12, 152, 113, 0.966), rgba(12, 152, 113, 0.966)); backdrop-filter: blur(8px); box-shadow: 0 10px 30px rgba(2,6,23,0.12); z-index: 2147483647 !important; border-bottom: 1px solid rgba(255,255,255,0.03); transform: translateZ(0); }
+.header-bar .container { max-width:1200px; margin:0 auto; width:100%; padding-top: 16px; padding-bottom: 0; display:flex; align-items:center; justify-content:space-between }
+.brand { display:flex; align-items:center; gap:0; padding-top:16px; margin:0 }
+.logo { background: linear-gradient(90deg,var(--primary),rgba(88, 232, 220, 0.97)); color: white; font-weight:700; padding:0.25rem 0.5rem; border-radius:6px; font-size:1rem; box-shadow: 0 6px 16px rgba(79,70,229,0.12); letter-spacing:0.4px; margin:0 }
+.title { font-weight:700; color:var(--text); font-size:1rem; margin:0; padding-left:6px }
+
+.main-nav { display:flex; gap:0.6rem; align-items:center }
+.main-nav a { color:rgb(250, 250, 250); text-decoration:none; padding:0.35rem 0.6rem; border-radius:10px; display:inline-flex; gap:0.5rem; align-items:center; font-weight:700; font-size:0.95rem }
+.main-nav a:hover { color: var(--primary); background: rgba(37,99,235,0.08); transform: translateY(-1px); box-shadow: 0 6px 16px rgba(2,6,23,0.06); }
+.main-nav a.active { background: linear-gradient(90deg,var(--primary),var(--accent)); color: white; box-shadow: 0 10px 30px rgba(79,70,229,0.22); }
+.nav-icon { width:18px; height:18px; color:currentColor; opacity:0.95 }
+
+/* push page content below header */
+main.app-container { padding-top: calc(var(--header-height) + var(--header-top-offset) + 12px) }
+
+/* logout button styles */
+.logout-btn { display:inline-flex; gap:8px; align-items:center; padding:6px 10px; border-radius:999px; background:linear-gradient(90deg,#e3bbbb,#dc2626); color:white; border:none; cursor:pointer; font-weight:700; box-shadow: 0 6px 16px rgba(239,68,68,0.12); }
+.logout-icon { width:16px; height:16px }
+
+/* responsive tweaks */
+@media (max-width:1000px) { .logo { padding:0.35rem 0.6rem; font-size:0.95rem } .title { font-size:0.95rem } .main-nav a { font-size:0.9rem; padding:0.45rem 0.6rem } .nav-icon { width:16px; height:16px } }
+@media (max-width:800px) { .main-nav { display:none } }

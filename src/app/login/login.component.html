@@ -1,0 +1,45 @@
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="auth-side">
+      <!-- Replace the src with your image file under /assets or another URL -->
+      <img src="https://www.greenwingtechnology.com/wp-content/uploads/2024/11/electrical-distributors.jpg" alt="Illustration" />
+    </div>
+
+    <div class="auth-body">
+      <div class="brand">
+        <div class="logo">IMS</div>
+        <p class="muted">Sign in to continue</p>
+      </div>
+
+      <form [formGroup]="form" (ngSubmit)="submit()" class="form">
+        <div class="field">
+          <label>Username</label>
+          <input formControlName="username" autocomplete="username" />
+        </div>
+
+        <div class="field">
+          <label>Password</label>
+          <input type="password" formControlName="password" autocomplete="current-password" />
+        </div>
+
+        <div class="field">
+          <label>Role</label>
+          <select formControlName="role" class="role-select">
+            <option value="admin">Admin</option>
+            <option value="others">User</option>
+          </select>
+        </div>
+
+        <div class="actions">
+          <button type="submit" [disabled]="form.invalid" class="btn-primary">Sign in</button>
+        </div>
+
+        <div class="footer-links">
+          <a routerLink="/register">Create account</a>
+        </div>
+
+        <div *ngIf="error" class="error-text">{{ error }}</div>
+      </form>
+    </div>
+  </div>
+</div>

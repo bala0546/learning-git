@@ -1,0 +1,42 @@
+<div class="app-container">
+  <header class="top">
+    <h1>Supplier List</h1>
+    
+  </header>
+
+  <div *ngIf="notification" class="notification">{{ notification }}</div>
+
+  <div class="top" style="margin-top:0.75rem; display:flex; gap:0.5rem; align-items:center;">
+    <input placeholder="Search suppliers..." [(ngModel)]="query" (input)="applyFilter()" />
+    <a class="button" routerLink="/suppliers/new">Add Supplier</a>
+  </div>
+
+  <div class="list box" style="margin-top:1rem;">
+    <table class="inventory-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Contact</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let s of filtered">
+          <td>{{ s.id }}</td>
+          <td>{{ s.name }}</td>
+          <td>{{ s.contact }}</td>
+          <td>{{ s.email }}</td>
+          <td>{{ s.phone }}</td>
+          <td>
+            <a class="button small view" [routerLink]="['/suppliers', s.id]">View</a>
+            <a routerLink="/suppliers/{{s.id}}/edit" class="button small">Edit</a>
+            <button class="remove" (click)="remove(s.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

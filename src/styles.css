@@ -1,1 +1,139 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Global styles for the IMS dashboard */
+:root {
+  --bg:  linear-gradient(90deg,rgba(230, 230, 230, 0.95), rgba(102, 235, 224, 0.95));
+  --card: #ffffff;
+  --muted: #6b7280;
+  --text: #0f172a;
+  --primary: #24be97;
+  --accent: #6ce6ff;
+  --danger: #f27171;
+  --success: #16a34a;
+  --shadow: 0 6px 18px rgb(186, 194, 231);
+}
+
+* { box-sizing: border-box; }
+html, body, app-root { height: 100%; }
+body {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-feature-settings: "liga" 1;
+  font-feature-settings: "liga" 1;
+}
+
+/* App container used by routed pages */
+.app-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+/* Header / navigation */
+header .top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+header h1 { margin: 0; font-size: 1.5rem; font-weight: 700; }
+nav a { color: var(--muted); text-decoration: none; margin-left: 0.75rem; font-weight: 600; }
+nav a:hover, nav a.active { color: var(--primary); }
+
+/* Dashboard cards */
+.dashboard .cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.card {
+  background: var(--card);
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+.card h3 { margin: 0; color: var(--muted); font-size: 0.9rem; }
+.card .big { font-size: 2rem; font-weight: 700; margin-top: 0.5rem; color: var(--text); }
+
+/* Recent items */
+.recent { margin-top: 1rem; }
+.recent > .box { background: var(--card); padding: 1rem; border-radius: 12px; box-shadow: var(--shadow); }
+.recent ul { margin: 0; padding-left: 1rem; color: var(--muted); }
+
+/* Inventory page global helpers */
+.inventory-page { max-width: 1200px; margin: 1rem auto; }
+.top { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+.actions { display: flex; gap: 0.5rem; align-items: center; }
+.actions input { padding: 0.5rem; border: 1px solid #e6edf6; border-radius: 8px; min-width: 220px; }
+.actions button { padding: 0.5rem 0.75rem; border-radius: 8px; border: 0; background: var(--primary); color: white; }
+
+.add-form { display: flex; gap: 0.5rem; margin: 0.75rem 0; flex-wrap: wrap; }
+.add-form input { padding: 0.45rem; border: 1px solid #e6edf6; border-radius: 8px; }
+.add-form button { padding: 0.45rem 0.6rem; background: var(--success); color: white; border: 0; border-radius: 8px; }
+
+/* Table visual improvements (component-level CSS still applies) */
+.inventory-table { width: 100%; border-collapse: collapse; margin-top: 0.75rem; background: var(--card); border-radius: 10px; overflow: hidden; box-shadow: var(--shadow); }
+.inventory-table thead th { background: #f8fafc; color: var(--muted); font-weight: 600; font-size: 0.85rem; }
+.inventory-table th, .inventory-table td { padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid rgba(15,23,42,0.04); }
+.inventory-table td.low { color: var(--danger); font-weight: 700; }
+
+/* Buttons */
+button { cursor: pointer; border-radius: 10px; font-weight: 600; border: 0; padding: 0.5rem 0.75rem; }
+.remove { background: var(--danger); color: white; }
+
+/* Small utilities */
+.kpi { display: flex; gap: 0.75rem; align-items: center; }
+.kpi .value { font-weight: 700; font-size: 1.25rem; }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .dashboard .cards { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .dashboard .cards { grid-template-columns: 1fr; }
+  nav { display: none; }
+  .app-container { margin: 0.5rem; padding: 0.5rem; }
+  .actions input { min-width: 120px; }
+}
+
+/* Global entrance animations (applies across modules) */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes imsFadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes imsFadeLeft {
+    from { opacity: 0; transform: translateX(8px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  /* per-element delay variable (--delay) can be overridden inline */
+  .card { opacity: 0; transform: translateY(8px); animation: imsFadeUp 420ms cubic-bezier(.22,.9,.3,1) var(--delay, 0ms) both; }
+  .recent-item { opacity: 0; transform: translateX(8px); animation: imsFadeLeft 320ms ease var(--delay, 0ms) both; }
+
+  /* stagger commonly used containers */
+  .cards .card:nth-child(1) { --delay: 0ms }
+  .cards .card:nth-child(2) { --delay: 80ms }
+  .cards .card:nth-child(3) { --delay: 160ms }
+  .cards .card:nth-child(4) { --delay: 240ms }
+  .cards .card:nth-child(5) { --delay: 320ms }
+  .cards .card:nth-child(6) { --delay: 420ms }
+
+  .summary-grid .card:nth-child(1) { --delay: 0ms }
+  .summary-grid .card:nth-child(2) { --delay: 80ms }
+  .summary-grid .card:nth-child(3) { --delay: 160ms }
+  .summary-grid .card:nth-child(4) { --delay: 240ms }
+  .summary-grid .card:nth-child(5) { --delay: 320ms }
+
+  /* small per-list stagger for recent items */
+  .recent-item:nth-child(1) { --delay: 120ms }
+  .recent-item:nth-child(2) { --delay: 180ms }
+  .recent-item:nth-child(3) { --delay: 240ms }
+  .recent-item:nth-child(4) { --delay: 300ms }
+  .recent-item:nth-child(5) { --delay: 360ms }
+}
+
+/* If reduced motion is requested, keep elements visible without animation */
+@media (prefers-reduced-motion: reduce) {
+  .card, .recent-item { opacity: 1; transform: none; animation: none !important }
+}

@@ -1,0 +1,35 @@
+:host{display:block;font-family:Inter, system-ui, Arial, 'Helvetica Neue', Roboto}
+.register-page{display:flex;height:100vh;align-items:center;justify-content:center;background:var(--bg);padding:2rem}
+.auth-card{width:100%;max-width:none;background:#ffffff;border-radius:10px;box-shadow:0 8px 24px rgba(10,14,40,0.06);padding:0;display:flex;overflow:hidden;height:calc(100vh - 4rem)}
+.auth-side{flex:0 0 50%;min-width:50%;height:100%;display:flex;align-items:center;justify-content:center}
+.auth-side img{width:100%;height:100%;object-fit:cover;display:block}
+.auth-body{flex:0 0 50%;padding:36px;display:flex;flex-direction:column;gap:18px;align-items:stretch;justify-content:center}
+
+/* Form inside right column - constrain width and spacing like login */
+.form{width:100%;max-width:420px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+
+.field label{display:block;font-weight:700;color:#0f172a;margin-bottom:6px;font-size:0.9rem}
+.field{position:relative}
+
+input, select{width:100%;padding:10px 12px;border-radius:8px;border:1px solid rgba(15,23,42,0.06);background:#fff;font-size:0.95rem;color:#0f172a}
+input::placeholder{color:#94a3b8}
+input:focus, select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(36,190,151,0.08)}
+
+.actions{display:flex;justify-content:flex-end;margin-top:6px}
+.btn-register{background:var(--primary);color:white;padding:10px 14px;border-radius:8px;border:none;font-weight:700;cursor:pointer}
+.btn-register[disabled]{opacity:0.6;cursor:not-allowed}
+
+.demo-credentials{margin-top:12px;font-size:14px;color:#666;text-align:center}
+
+.field-error{color:#b91c1c;font-size:12px;margin-top:6px}
+.error-text{color:#b91c1c;font-size:13px;margin-top:8px;text-align:center}
+
+/* Slightly larger heading inside the form */
+h2{margin:0 0 12px 0;font-size:1.25rem;text-align:left}
+
+@media (max-width:760px){
+  .auth-card{width:92vw;flex-direction:column;height:auto}
+  .auth-side{height:180px;flex:0 0 auto}
+  .auth-body{padding:18px}
+  .form{max-width:92vw}
+}

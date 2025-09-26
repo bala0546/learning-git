@@ -1,0 +1,8 @@
+.form.box { background: var(--card); padding: 1rem; border-radius: 12px; box-shadow: var(--shadow); display:flex; flex-direction:column; gap:0.75rem; width:100%; box-sizing:border-box }
+label { display:flex; flex-direction:column; font-weight:600; color:var(--muted); width:100% }
+input { padding:0.5rem; border-radius:8px; border:1px solid #e6edf6; width:100%; box-sizing:border-box }
+button { background:var(--primary); color:white }
+button[type="button"] { background:#ef4444; color:#fff }
+/* validation error styling */
+.form.box .error { color:#b91c1c; font-size:0.8rem; margin-top:0.25rem }
+.form.box .error span { display:block }
